@@ -34,6 +34,7 @@ Two Folders "LiMoS2_hartree_potential " and "TiS2_hartree_potential" contain cp2
   - `profile_int_3.dat`
 
 - **Benchmark Visualization:**
+- Planar averaged Hartree potential for LiMoS2{orthorhombic cell} along the vacuum direction 
   
   ![Benchmark Visualization](LiMoS2_hartree_potential/LiMoS2_001.png)
 

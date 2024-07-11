@@ -51,10 +51,10 @@ from pymatgen.core import VolumetricData
 cp2k_out = Cp2kOutput('run.out')
 
 # Parse the cube file
-vol_data = VolumetricData.from_cube_file('run-Hartree-v_hartree-1_0.cube')
+vol_data=cp2k_out.parse_cube()
 
 # Compute the planar average
-planar_avg = vol_data.get_average_along_axis(axis=2)  # Assuming z-axis
+planar_avg = vol_data.get_average_along_axis(ind=2)  # Assuming z-axis
 
 # Benchmarking with cubecruncher tool results
 with open('profile_int_3.dat', 'r') as f:

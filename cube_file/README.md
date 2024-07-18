@@ -54,15 +54,17 @@ cp2k_out = Cp2kOutput('run.out')
 vol_data=cp2k_out.parse_cube()
 
 # Compute the planar average
-planar_avg = vol_data.get_average_along_axis(ind=2)  # Assuming z-axis
+planar_avg = vol.get_average_along_axis(ind=2)  # ind 2 is for 001 direction 
+c_latt=structure.lattice.c
+c_arr=np.linspace(0,c_latt,len(planar_avg))
 
 # Benchmarking with cubecruncher tool results
-with open('profile_int_3.dat', 'r') as f:
-    cubecruncher_data = [float(line.strip()) for line in f]
+Dis,Pot= np.loadtxt('profile_int_3.dat', unpack=True, dtype = float ,usecols=(0,1))
 
 # Comparison and benchmarking (this is a conceptual representation)
 benchmark_results = compare_planar_average(planar_avg, cubecruncher_data)
 
 # Visualization (pseudo-code)
-visualize_benchmark(benchmark_results, output_file='benchmark.png')
+ax.plot(Dis, Pot,marker="x", linewidth=1.0,color="black",alpha=1.0,markersize=5,label='cubecruncher')
+ax.plot(c_arr,planar_avg,marker="s", linewidth=1.0,color="blue",alpha=1.0,markersize=2,label='pymatgen')
 

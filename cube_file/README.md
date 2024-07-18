@@ -61,8 +61,6 @@ c_arr=np.linspace(0,c_latt,len(planar_avg))
 # Benchmarking with cubecruncher tool results
 Dis,Pot= np.loadtxt('profile_int_3.dat', unpack=True, dtype = float ,usecols=(0,1))
 
-# Comparison and benchmarking (this is a conceptual representation)
-benchmark_results = compare_planar_average(planar_avg, cubecruncher_data)
 
 # Visualization (pseudo-code)
 ax.plot(Dis, Pot,marker="x", linewidth=1.0,color="black",alpha=1.0,markersize=5,label='cubecruncher')

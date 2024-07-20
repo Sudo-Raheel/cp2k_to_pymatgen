@@ -1,23 +1,17 @@
 import numpy as np
-from pymatgen.io.cp2k.outputs import Cp2kOutput
-from pymatgen.core import Structure
 from pymatgen.io.common import VolumetricData
-from pymatgen.io.vasp.outputs import VolumetricData as vasp_volume
 from matplotlib import pyplot as plt 
-
 # Assuming you have a structure object already loaded or defined in Pymatgen
 
-out_cp2k=Cp2kOutput(filename='run.out')
-vol=out_cp2k.parse_cube()
-structure = out_cp2k.parse_initial_structure()
+chgcar_AB = VolumetricData.from_cube("run-v_hartree-1_0.cube")
+grid=np.shape(chgcar_AB.data['total'])
+poscar = chgcar_AB.structure  # strucutre of total system 
 
-planar_avg = vol.get_average_along_axis(ind=2)  # ind 2 is for 001 direction 
-c_latt=structure.lattice.c
-c_arr=np.linspace(0,c_latt,len(planar_avg))
-print(len(planar_avg),c_latt,c_latt/len(planar_avg))
+planar_avg = chgcar_AB.get_average_along_axis(ind=2)  # ind 2 is for 001 direction 
+c_latt=poscar.lattice.c
+
+c_arr=np.linspace(0,c_latt,grid[2])
 Dis,Pot= np.loadtxt('profile_int_3.dat', unpack=True, dtype = float ,usecols=(0,1))
-#cubecruncher 216 30.0 0.1388888888888889
-
 
 
 #plotting 

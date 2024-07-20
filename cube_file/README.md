@@ -39,10 +39,10 @@ Two Folders "LiMoS2_hartree_potential " and "TiS2_hartree_potential" contain cp2
   ![Benchmark Visualization](LiMoS2_hartree_potential/LiMoS2_001.png)
 
 
-## Code Snippet (Example)
 
 Here's an example code snippet for parsing the CP2K output and computing the planar average:
 
+```python
 from pymatgen.io.common import VolumetricData
 from matplotlib import pyplot as plt 
 
@@ -50,21 +50,18 @@ chgcar_AB = VolumetricData.from_cube("run-v_hartree-1_0.cube")
 grid=np.shape(chgcar_AB.data['total'])
 poscar = chgcar_AB.structure  # strucutre of total system 
 
+# Compute the planar average
 planar_avg = chgcar_AB.get_average_along_axis(ind=2)  # ind 2 is for 001 direction 
-c_latt=poscar.lattice.c
-
-c_arr=np.linspace(0,c_latt,grid[2])
-Dis,Pot= np.loadtxt('profile_int_3.dat', unpack=True, dtype = float ,usecols=(0,1))
-
-
-#plotting 
-fig,ax = plt.subplots()# ind 2 is for 001 direction 
-c_latt=structure.lattice.c
+c_latt=poscar.structure.lattice.c
 c_arr=np.linspace(0,c_latt,len(planar_avg))
 
 # Benchmarking with cubecruncher tool results
 Dis,Pot= np.loadtxt('profile_int_3.dat', unpack=True, dtype = float ,usecols=(0,1))
 
+
+# Visualization (pseudo-code)
+ax.plot(Dis, Pot,marker="x", linewidth=1.0,color="black",alpha=1.0,markersize=5,label='cubecruncher')
+ax.plot(c_arr,planar_avg,marker="s", linewidth=1.0,color="blue",alpha=1.0,markersize=2,label='pymatgen')
 
 # Visualization (pseudo-code)
 ax.plot(Dis, Pot,marker="x", linewidth=1.0,color="black",alpha=1.0,markersize=5,label='cubecruncher')
